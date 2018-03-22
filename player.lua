@@ -7,7 +7,7 @@ local player = {
 	onGround = false,
 	vx = 0,
 	vy = 0,
-	terminalVelocity = 650,
+	terminalVelocity = 750,
 	jumpVelocity = -550,
 	gravity = 880,
 	trueGravity = 880,
@@ -23,10 +23,6 @@ function collisionFilter(item, other)
 	and (other.name == 'l_detector' or other.name == 'r_detector') then
 		return "cross"
 	end
-	if (item.name == "l_detector" or item.name == "r_detector")
-	and other.name == "solid" then
-		return "cross"
-	end	
 	return "slide"
 end
 
@@ -90,8 +86,7 @@ function player:collide(dt)
 	for i = 1, len do
 		local col = cols[i]
 		if col.other.name == "lava" then
-			self.x, self.y = self.spawnX, self.spawnY
-			world:update(self, self.x, self.y)
+			self:reset()
 			return
 		end
 		if col.other.name == "solid" then
@@ -103,6 +98,16 @@ function player:collide(dt)
 			end
 			if col.normal.y == -1 then
 				self.onGround = true
+			end
+		end
+		if col.other.name == "walker" then
+			if col.normal.y == -1 then
+				self.vy = 2 * self.jumpVelocity
+				col.other:kill()
+			end
+			if col.normal.x == -1 or col.normal.x == 1 then
+				self:reset()
+				return
 			end
 		end
 	end
@@ -146,6 +151,10 @@ function player:collide(dt)
 	end
 
 	self.x, self.y = nextX, nextY
+end
+
+function player:reset()
+	love.event.quit("restart")
 end
 
 function player:applyGravity(dt)
