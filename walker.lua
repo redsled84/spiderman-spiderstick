@@ -39,11 +39,23 @@ do
       if len2 == 0 then
         self.dir = 0
       end
-      if self.dir > 0 then
-        self.vx = self.speed
+      if not self.stop then
+        if self.dir > 0 then
+          self.vx = self.speed
+        else
+          self.vx = -self.speed
+        end
       else
-        self.vx = -self.speed
+        self.vx = 0
       end
+    end,
+    engage = function(self)
+      self.stop = true
+    end,
+    speedyMcSpeedster = function(self)
+      self.stop = false
+      self.potentiallyDead = true
+      self.speed = self.speed * 3
     end,
     kill = function(self)
       self.dead = true
@@ -80,10 +92,11 @@ do
       self.x, self.y, self.width, self.height = x, y, width, height
       self.p1_detector, self.p2_detector = self:getDetecterPoints()
       self.vx, self.vy = 0, 0
-      self.speed = 100
+      self.speed = 160
       self.dir = 0
       self.name = "walker"
       self.dead = false
+      self.potentiallyDead = false
       return world:add(self, x, y, width, height)
     end,
     __base = _base_0,

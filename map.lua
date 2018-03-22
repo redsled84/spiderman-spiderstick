@@ -1,14 +1,14 @@
 return {
   version = "1.1",
   luaversion = "5.1",
-  tiledversion = "0.14.2",
+  tiledversion = "1.0.3",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 64,
   height = 64,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 42,
+  nextobjectid = 56,
   properties = {},
   tilesets = {},
   layers = {
@@ -19,6 +19,7 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
+      draworder = "topdown",
       properties = {},
       objects = {
         {
@@ -79,9 +80,9 @@ return {
           type = "",
           shape = "rectangle",
           x = 128,
-          y = 160,
+          y = 192,
           width = 32,
-          height = 544,
+          height = 512,
           rotation = 0,
           visible = true,
           properties = {}
@@ -107,7 +108,7 @@ return {
           x = 288,
           y = 32,
           width = 32,
-          height = 448,
+          height = 416,
           rotation = 0,
           visible = true,
           properties = {}
@@ -120,7 +121,7 @@ return {
           x = 608,
           y = 32,
           width = 32,
-          height = 448,
+          height = 416,
           rotation = 0,
           visible = true,
           properties = {}
@@ -156,7 +157,7 @@ return {
           name = "",
           type = "",
           shape = "rectangle",
-          x = 1504,
+          x = 1472,
           y = 32,
           width = 32,
           height = 384,
@@ -198,7 +199,7 @@ return {
           x = 2016,
           y = 32,
           width = 32,
-          height = 704,
+          height = 2016,
           rotation = 0,
           visible = true,
           properties = {}
@@ -210,7 +211,7 @@ return {
           shape = "rectangle",
           x = 1664,
           y = 1664,
-          width = 192,
+          width = 224,
           height = 32,
           rotation = 0,
           visible = true,
@@ -228,6 +229,71 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 42,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 928,
+          width = 992,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 46,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 960,
+          width = 32,
+          height = 320,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 49,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 352,
+          y = 1216,
+          width = 608,
+          height = 320,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 53,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 32,
+          y = 1504,
+          width = 320,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 55,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 1824,
+          y = 736,
+          width = 32,
+          height = 928,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -238,6 +304,7 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
+      draworder = "topdown",
       properties = {},
       objects = {
         {
@@ -280,19 +347,6 @@ return {
           properties = {}
         },
         {
-          id = 31,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 2016,
-          y = 736,
-          width = 32,
-          height = 1312,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 32,
           name = "",
           type = "",
@@ -300,7 +354,7 @@ return {
           x = 1856,
           y = 736,
           width = 32,
-          height = 1184,
+          height = 928,
           rotation = 0,
           visible = true,
           properties = {}
@@ -311,9 +365,22 @@ return {
           type = "",
           shape = "rectangle",
           x = 1184,
-          y = 1024,
+          y = 928,
           width = 32,
-          height = 992,
+          height = 1088,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 52,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 32,
+          y = 1472,
+          width = 320,
+          height = 32,
           rotation = 0,
           visible = true,
           properties = {}
@@ -327,6 +394,7 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
+      draworder = "topdown",
       properties = {},
       objects = {
         {
@@ -362,6 +430,32 @@ return {
           shape = "rectangle",
           x = 1312,
           y = 1312,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 43,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 736,
+          y = 896,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 50,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 576,
+          y = 1184,
           width = 32,
           height = 32,
           rotation = 0,

@@ -12,11 +12,12 @@ class Walker
     @p1_detector, @p2_detector = @getDetecterPoints!
 
     @vx, @vy = 0, 0
-    @speed = 100
+    @speed = 160
     -- 0 for left, 1 for right
     @dir = 0
     @name = "walker"
     @dead = false
+    @potentiallyDead = false
 
     world\add self, x, y, width, height
 
@@ -46,11 +47,22 @@ class Walker
     if len2 == 0
       @dir = 0
 
-    if @dir > 0
-      @vx = @speed
+    if not @stop
+      if @dir > 0
+        @vx = @speed
+      else
+        @vx = -@speed
     else
-      @vx = -@speed
+      @vx = 0
     -- print len1, len2
+
+  engage: =>
+    @stop = true
+
+  speedyMcSpeedster: =>
+    @stop = false
+    @potentiallyDead = true
+    @speed = @speed * 3
 
   kill: =>
     @dead = true

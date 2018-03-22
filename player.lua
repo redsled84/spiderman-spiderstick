@@ -7,15 +7,15 @@ local player = {
 	onGround = false,
 	vx = 0,
 	vy = 0,
-	terminalVelocity = 750,
+	terminalVelocity = 650,
 	jumpVelocity = -550,
 	gravity = 880,
 	trueGravity = 880,
 	wallGravity = 550,
-	leftDetector = {width = 6, height = 0, x = 0, y = 0, name = 'l_detector'},
-	rightDetector = {width = 6, height = 0, x = 0, y = 0, name = 'r_detector'},
+	leftDetector = {active = false, width = 2, height = 0, x = 0, y = 0, name = 'l_detector'},
+	rightDetector = {active = false, width = 2, height = 0, x = 0, y = 0, name = 'r_detector'},
 	name = 'player',
-	wallJumpVelocity = 0
+	wallJumpVelocity = 0,
 }
 
 function collisionFilter(item, other)
@@ -102,8 +102,18 @@ function player:collide(dt)
 		end
 		if col.other.name == "walker" then
 			if col.normal.y == -1 then
-				self.vy = 2 * self.jumpVelocity
-				col.other:kill()
+				if not col.other.potentiallyDead then
+					if not col.other.stop then
+						col.other:engage()
+						self.vy = .5 * self.jumpVelocity
+					else
+						self.vy = self.jumpVelocity
+						col.other:speedyMcSpeedster()
+					end
+				else
+					self.vy = 1.6 * self.jumpVelocity
+					col.other:kill()
+				end
 			end
 			if col.normal.x == -1 or col.normal.x == 1 then
 				self:reset()
@@ -112,14 +122,25 @@ function player:collide(dt)
 		end
 	end
 
+	self:checkDetectors()
+	self:adjustWallVelocity()
+
+	self.x, self.y = nextX, nextY
+end
+
+function player:checkDetectors()
 	local _, _, cols, len = world:check(self.leftDetector,
 		self.leftDetector.x, self.leftDetector.y)
-	local leftSide = false
-	local rightSide = false
+	self.leftDetector.active = false
+	self.rightDetector.active = false
 	for i = 1, len do
 		local col = cols[i]
+		if col.other.name == "walker" then
+			self:reset()
+		end
+
 		if col.other.name ~= "player" then
-			leftSide = true
+			self.leftDetector.active = true
 		end
 	end
 
@@ -127,30 +148,29 @@ function player:collide(dt)
 		self.rightDetector.x, self.rightDetector.y)
 	for i = 1, len do
 		local col = cols[i]
+
+		if col.other.name == "walker" then
+			self:reset()
+		end
+
 		if col.other.name ~= "player" then
-			rightSide = true
+			self.rightDetector.active = true
 		end
 	end
+end
 
-	if leftSide and rightSide then
-		self.wallJumpVelocity = 0
-	elseif leftSide then
-		self.wallJumpVelocity = 550
-	elseif rightSide then
-		self.wallJumpVelocity = -550
-	else
-		self.wallJumpVelocity = 0
+function player:adjustWallVelocity()
+	if self.leftDetector.active then
+		self.wallJumpVelocity = 330
+	elseif self.rightDetector.active then
+		self.wallJumpVelocity = -330
 	end
 
-	if leftSide or rightSide then
-		self.onGround = true
-
+	if self.leftDetector.active or self.rightDetector.active then
 		self.gravity = self.wallGravity
 	else
 		self.gravity = self.trueGravity
 	end
-
-	self.x, self.y = nextX, nextY
 end
 
 function player:reset()
@@ -158,10 +178,15 @@ function player:reset()
 end
 
 function player:applyGravity(dt)
+	local isOnWall = self.leftDetector.active or self.rightDetector.active
+
 	if self.vy < self.terminalVelocity then
 		self.vy = self.vy + self.gravity * dt
 	else
 		self.vy = self.terminalVelocity
+	end
+	if isOnWall and love.keyboard.isDown("space") then
+		self.vy = love.keyboard.isDown("up") and -500 or 0
 	end
 end
 
@@ -173,9 +198,16 @@ function player:update(dt)
 end
 
 function player:jump(key)
-	if key == "up" and self.onGround then
-		self.vy = self.jumpVelocity
-		if self.wallJumpVelocity ~= 0 then
+	if key == "up" then
+		local isOnWall = self.leftDetector.active or self.rightDetector.active
+		if self.onGround then
+			self.vy = self.jumpVelocity
+		elseif self.leftDetector.active or self.rightDetector.active then
+			if love.keyboard.isDown("space") then
+				self.vy = self.jumpVelocity * 3
+			else
+				self.vy = self.jumpVelocity
+			end
 			self.vx = self.wallJumpVelocity
 		end
 	end

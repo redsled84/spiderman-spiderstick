@@ -39,16 +39,18 @@ function love.load()
 		local obj = map.layers[3].objects[i]
 
 		-- print(obj.x, obj.y, obj.width, obj.height)
-		walkers[i] = Walker(obj.x, obj.y, obj.width, obj.height)
+		walkers[i] = Walker(obj.x, obj.y, 48, 32)
 	end
 
+	-- player:add(32, 32)
 	player:add(1980, 1800)
 	cam = Camera(player.x, player.y)
 end
 
 function love.update(dt)
 	player:update(dt)
-	cam:lookAt(player.x, player.y)
+	cam:lockX(player.x, Camera.smooth.damped(12))
+	cam:lockY(player.y, Camera.smooth.damped(12))
 
 	for i = #walkers, 1, -1 do
 		local walker = walkers[i]
