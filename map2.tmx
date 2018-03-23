@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" nextobjectid="6">
+ <objectgroup name="Solids">
+  <object id="1" x="0" y="0" width="32" height="2048"/>
+  <object id="2" x="32" y="0" width="512" height="32"/>
+  <object id="3" x="192" y="192" width="32" height="1856"/>
+  <object id="4" x="32" y="2016" width="160" height="32"/>
+  <object id="5" x="224" y="480" width="1120" height="32"/>
+ </objectgroup>
+ <objectgroup name="Lava"/>
+ <objectgroup name="Walkers"/>
+</map>
